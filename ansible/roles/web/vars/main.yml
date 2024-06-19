@@ -1,0 +1,5 @@
+---
+# vars file for web
+domain: netology
+port: 80
+name: netology

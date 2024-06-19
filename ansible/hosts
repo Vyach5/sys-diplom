@@ -1,0 +1,28 @@
+[balancer]
+158.160.176.119
+
+[netology:children]
+bastion
+web
+zabbix
+elastic
+kibana
+
+[bastion]
+bastion-vm.ru-central1.internal public_ip=158.160.60.214 
+    
+[web]
+web1-vm.ru-central1.internal 
+web2-vm.ru-central1.internal
+
+[zabbix]
+zabbix-vm.ru-central1.internal public_ip=51.250.89.172 
+
+[elastic]
+elastic-vm.ru-central1.internal
+
+[kibana]
+kibana-vm.ru-central1.internal public_ip=158.160.127.76 
+    
+[netology:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -o StrictHostKeyChecking=no -p 22 -W %h:%p -q vyach@158.160.60.214"'

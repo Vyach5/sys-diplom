@@ -1,0 +1,48 @@
+---
+- name: Configure Elastic
+  hosts: elastic
+  become: yes
+  roles:
+    - elastic
+  tags:
+    - elastic
+
+- name: Configure Kibana
+  hosts: kibana
+  become: yes
+  roles:
+    - kibana
+  tags:
+    - kibana
+
+- name: Configure Web Servers
+  hosts: web
+  become: yes
+  roles:
+    - web
+    - filebeat
+#  gather_facts: false
+  tags:
+    - web
+
+- name: Install Zabbix agent
+  hosts: 
+    - web
+    - elastic
+    - kibana
+    - bastion
+  become: yes
+  roles:
+    - zabbix_agent
+  tags:
+    - zabbix_agent
+
+- name: Configure Zabbix server
+  hosts: zabbix
+  become: yes
+  vars:   
+    - password_db: netology
+  roles:
+    - zabbix_server
+  tags:
+    - zabbix_server

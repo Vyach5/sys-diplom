@@ -1,0 +1,50 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: Create www directory
+  ansible.builtin.file:
+    path: /var/www/{{ domain }}
+    state: directory
+    mode: '0775'
+
+- name: Delete default nginx site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Reload Nginx
+
+- name: Copy custom config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Reload Nginx
+
+- name: Copy nginx site.conf
+  template:
+    src: site.conf.j2
+    dest: /etc/nginx/sites-enabled/{{ domain }}
+    owner: root
+    group: root
+    mode: '0644'
+
+# - name: Copy website
+#   ansible.builtin.copy:
+#     src: index.html
+#     dest: /var/www/{{ domain }}
+#   notify: Reload Nginx
+        
+- name: Copy index page
+  template:
+    src: index.html.j2
+    dest: /var/www/{{ domain }}/index.html
+  notify: Reload Nginx
+
+- name: Copy site pic
+  ansible.builtin.copy:
+    src: avatar.jpg
+    dest: /var/www/{{ domain }}
+  notify: Reload Nginx

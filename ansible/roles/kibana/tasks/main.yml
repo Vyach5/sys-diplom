@@ -1,0 +1,19 @@
+---
+- name: Install Kibana
+  ansible.builtin.apt:
+    deb: "https://ftp.yandex.ru/mirrors/elastic/7/pool/main/k/kibana/kibana-7.17.14-amd64.deb"
+    state: present
+
+- name: Copy Kibana configuration
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    mode: '0644'
+  notify:
+    - Restart Kibana
+
+- name: Enable Kibana service
+  systemd:
+    name: kibana
+    enabled: yes
+    state: started

@@ -1,0 +1,16 @@
+.obsidian/*
+
+keys/*
+
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+
+ansible/hosts.bc
+ansible/terraform.tfstate
+ansible/terraform.tfstate.backup
+ansible/roles/web/tasks/index.html
+
+terraform_bc.zip
+.temp.txt

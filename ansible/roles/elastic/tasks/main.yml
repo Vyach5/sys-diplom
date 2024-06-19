@@ -1,0 +1,19 @@
+---
+- name: Install Elasticsearch
+  ansible.builtin.apt:
+    deb: "https://ftp.yandex.ru/mirrors/elastic/7/pool/main/e/elasticsearch/elasticsearch-7.17.14-amd64.deb"
+    state: present
+    
+- name: Copy Elasticsearch configuration
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    mode: '0644'
+  notify:
+    - Restart Elasticsearch
+
+- name: Make sure a service is running
+  ansible.builtin.systemd:
+    state: started
+    enabled: yes
+    name: elasticsearch
