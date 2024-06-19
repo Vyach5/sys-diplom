@@ -11,6 +11,7 @@ ansible/hosts.bc
 ansible/terraform.tfstate
 ansible/terraform.tfstate.backup
 ansible/roles/web/tasks/index.html
+ansible/roles/zabbix_server_bc.zip
 
 terraform_bc.zip
 .temp.txt
